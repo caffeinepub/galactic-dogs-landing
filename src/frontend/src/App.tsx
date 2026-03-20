@@ -693,38 +693,22 @@ export default function App() {
 
       {/* ---- Main content ---- */}
       <main className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-16">
-        {/* Brand mark */}
+        {/* Title */}
         <div
-          className="animate-fade-up mb-10 flex items-center gap-2"
+          className="animate-fade-up mb-10 text-center"
           style={{ animationDelay: "0.1s" }}
         >
           <span
-            className="text-xs font-semibold uppercase tracking-[0.35em]"
             style={{
-              color: "#A86BFF",
               fontFamily: "'Plus Jakarta Sans', sans-serif",
+              fontWeight: 700,
+              fontSize: "0.85rem",
+              letterSpacing: "0.35em",
+              textTransform: "uppercase",
+              color: "#A86BFF",
             }}
           >
             Galactic Dogs
-          </span>
-          <span
-            style={{
-              display: "inline-block",
-              width: 4,
-              height: 4,
-              borderRadius: "50%",
-              background: "#FF5AD6",
-              boxShadow: "0 0 8px #FF5AD6",
-            }}
-          />
-          <span
-            className="text-xs font-semibold uppercase tracking-[0.35em]"
-            style={{
-              color: "#59D6FF",
-              fontFamily: "'Plus Jakarta Sans', sans-serif",
-            }}
-          >
-            NFT Collection
           </span>
         </div>
 
@@ -737,14 +721,17 @@ export default function App() {
             marginBottom: "clamp(32px, 6vh, 72px)",
           }}
         >
-          {/* Kozmo -- left */}
+          {/* Kozmo -- left, dimmed */}
           <div
             className="flex flex-col items-center"
             style={{ marginBottom: "32px" }}
           >
             <div
               className="animate-float1"
-              style={{ filter: "drop-shadow(0 0 24px rgba(89,214,255,0.45))" }}
+              style={{
+                filter: "drop-shadow(0 0 16px rgba(89,214,255,0.3))",
+                opacity: 0.6,
+              }}
             >
               <DogKozmo />
             </div>
@@ -754,22 +741,43 @@ export default function App() {
                 color: "#59D6FF",
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 textShadow: "0 0 12px rgba(89,214,255,0.8)",
+                opacity: 0.6,
               }}
             >
               Kozmo
             </span>
           </div>
 
-          {/* Nova -- center, elevated */}
+          {/* Nova -- center, main focus */}
           <div
             className="flex flex-col items-center"
             style={{ marginBottom: "0px" }}
           >
+            {/* Glow ring behind Nova */}
+            <div
+              className="pointer-events-none absolute"
+              style={{
+                width: "280px",
+                height: "280px",
+                borderRadius: "50%",
+                background:
+                  "radial-gradient(ellipse at center, rgba(168,107,255,0.28) 0%, rgba(255,90,214,0.12) 50%, transparent 75%)",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -55%)",
+                zIndex: -1,
+              }}
+            />
             <div
               className="animate-float2"
-              style={{ filter: "drop-shadow(0 0 32px rgba(168,107,255,0.55))" }}
+              style={{
+                filter:
+                  "drop-shadow(0 0 40px rgba(168,107,255,0.85)) drop-shadow(0 0 80px rgba(168,107,255,0.4)) brightness(1.15)",
+              }}
             >
-              <DogNova />
+              <div style={{ transform: "scale(1.18)" }}>
+                <DogNova />
+              </div>
             </div>
             <span
               className="dog-label mt-2 text-xs font-semibold uppercase tracking-widest"
@@ -783,14 +791,17 @@ export default function App() {
             </span>
           </div>
 
-          {/* Blaze -- right */}
+          {/* Blaze -- right, dimmed */}
           <div
             className="flex flex-col items-center"
             style={{ marginBottom: "28px" }}
           >
             <div
               className="animate-float3"
-              style={{ filter: "drop-shadow(0 0 24px rgba(58,168,255,0.45))" }}
+              style={{
+                filter: "drop-shadow(0 0 16px rgba(58,168,255,0.3))",
+                opacity: 0.6,
+              }}
             >
               <DogBlaze />
             </div>
@@ -800,6 +811,7 @@ export default function App() {
                 color: "#3AA8FF",
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 textShadow: "0 0 12px rgba(58,168,255,0.8)",
+                opacity: 0.6,
               }}
             >
               Blaze
@@ -825,35 +837,62 @@ export default function App() {
               letterSpacing: "-0.02em",
             }}
           >
-            The Pack Has Left
-            <br />
-            <span
-              style={{
-                background:
-                  "linear-gradient(90deg, #A86BFF 0%, #FF5AD6 50%, #59D6FF 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              The Planet
-            </span>
+            Create Your Dog
           </h1>
 
           <p
-            className="mx-auto max-w-lg text-base leading-relaxed"
+            className="mx-auto max-w-lg leading-relaxed"
+            style={{
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
+              fontWeight: 400,
+              fontSize: "clamp(1rem, 2.2vw, 1.25rem)",
+              color: "#D0C8E8",
+              letterSpacing: "0.01em",
+              marginBottom: "0.5rem",
+            }}
+          >
+            Choose a breed. Name it. Own it.
+          </p>
+
+          <p
+            className="mx-auto max-w-lg leading-relaxed"
             style={{
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontWeight: 300,
-              fontSize: "clamp(0.95rem, 2vw, 1.15rem)",
-              color: "#B8C0D6",
+              fontSize: "clamp(0.85rem, 1.6vw, 1rem)",
+              color: "rgba(184,192,214,0.7)",
               letterSpacing: "0.01em",
             }}
           >
-            999 cosmic canines drifting through the galaxy.
-            <br />
-            Own a piece of the void.
+            Mint your own custom digital dog in seconds.
           </p>
+        </div>
+
+        {/* Primary CTA */}
+        <div
+          className="animate-fade-up mt-8"
+          style={{ animationDelay: "0.8s" }}
+        >
+          <button
+            data-ocid="hero.primary_button"
+            type="button"
+            style={{
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
+              fontWeight: 600,
+              fontSize: "1rem",
+              padding: "14px 40px",
+              borderRadius: "100px",
+              background: "linear-gradient(90deg, #A86BFF 0%, #FF5AD6 100%)",
+              color: "#fff",
+              border: "none",
+              cursor: "pointer",
+              letterSpacing: "0.04em",
+              boxShadow:
+                "0 0 32px rgba(168,107,255,0.5), 0 0 64px rgba(255,90,214,0.2)",
+            }}
+          >
+            Create Your Dog
+          </button>
         </div>
 
         {/* Divider line */}
