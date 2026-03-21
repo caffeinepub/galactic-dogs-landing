@@ -1,38 +1,39 @@
 # Galactic Dogs Landing
 
 ## Current State
-Single-page hero section with three floating astronaut dogs (Kozmo, Nova, Blaze), galactic milk bones, nebula backdrop, star field, hero copy, and a primary CTA button. Pure CSS animations. No backend. Minimal footer.
+- App.tsx is a 2892-line monolithic file containing all sections, components, SVGs, data, and layout inline.
+- Navbar and Footer are functions defined inside App.tsx, not separate files.
+- Footer has social icons (X, Discord, Instagram) but no TikTok; all social links point to `/` placeholder.
+- No routing — the app is a single-page scroll with no Privacy Policy or Terms of Service pages.
+- Digital Dog section is represented by BreedPreview and TraitCustomization sections, but they are relatively small/basic cards.
+- FOOTER_NAV data and social icon components (SiX, SiDiscord, SiInstagram) are inline in App.tsx.
 
 ## Requested Changes (Diff)
 
 ### Add
-- Sticky/simple top navigation bar with logo + nav links
-- Section 2: How It Works -- 4-step horizontal card row (Choose Breed, Customize Traits, Name Your Dog, Mint Instantly)
-- Section 3: Pick Your Breed Preview -- grid of 6 breed cards (Husky, Golden Retriever, Shiba Inu, Corgi, Dalmatian, Border Collie), each collectible-style with name, rarity tag, and visual placeholder
-- Section 4: Trait Customization Preview -- 3 trait category cards (Coat Color, Eye Style, Markings) with visual swatch/example chips; hero subtext about uniqueness
-- Section 5: My Dogs / Collection Preview -- gallery-style teaser with 3 example dog placeholder cards and explanation copy
-- Section 6: Community / Ecosystem -- 5-card grid (Starter Dogs, Content Tools, Graphics & Assets, Community Events, Future Features) with intentional "Coming Soon" states where appropriate
-- Section 7: Resources & Tools -- grid of 5 resource tiles (Starter Dogs, Content Generator, Graphics Library, Events, Shop)
-- Section 8: Join The Pack CTA -- large full-width premium dark card with headline, subtext, and strong CTA button
-- Section 9: Full footer -- logo, nav columns (Explore, Community, Resources), social icon placeholders, legal line
+- `src/frontend/src/config/siteConfig.ts` — central constants file: social links (X, Instagram, Discord, TikTok with placeholder `#` hrefs), nav links, footer nav columns, and legal links. This is the single place to swap URLs.
+- `src/frontend/src/components/Header.tsx` — reusable Navbar extracted from App.tsx, imports links from siteConfig.
+- `src/frontend/src/components/Footer.tsx` — reusable Footer extracted from App.tsx, imports links and social config from siteConfig. Adds TikTok. Adds Privacy Policy and Terms of Service links to bottom bar. Centers everything properly.
+- `src/frontend/src/components/DigitalDogFeature.tsx` — new premium feature section replacing or substantially enhancing the existing BreedPreview + TraitCustomization sections. Cinematic, collectible-focused, full-width layout with breed selection highlight, trait customization cards, naming/minting steps, strong CTA, and a placeholder zone for future live NFT preview.
+- `src/frontend/src/pages/PrivacyPolicy.tsx` — placeholder Privacy Policy page with real content structure.
+- `src/frontend/src/pages/TermsOfService.tsx` — placeholder Terms of Service page with real content structure.
+- React Router setup in main.tsx or App.tsx to enable routing between Home, Privacy Policy, and Terms of Service pages.
+- Space-themed TikTok SVG icon component matching existing SiX, SiDiscord, SiInstagram style.
 
 ### Modify
-- Hero: preserve entirely; polish vertical spacing only; add subtle scroll indicator at bottom
-- index.css: add new keyframe animations and utility classes needed for new sections; add new color tokens for cream/warm gold accents
-- Overall color system: soften neon to softer dark-space palette; cream/warm gold for card accents; deep navy base; purple-blue glows controlled
+- `App.tsx` — remove inline Navbar, Footer, BreedPreview, and TraitCustomization. Import Header, Footer, and DigitalDogFeature from their new files. Wrap in Router.
+- Footer bottom bar: center layout, add legal links (Privacy Policy, Terms of Service) as router links.
+- Social icons in Footer: add TikTok, all pointing to siteConfig constants.
 
 ### Remove
-- Old minimal footer inside hero main section (replaced by full footer component)
+- Inline Navbar, Footer, SiX, SiDiscord, SiInstagram SVG functions from App.tsx.
+- Inline BreedPreview and TraitCustomization from App.tsx (replaced by DigitalDogFeature).
 
 ## Implementation Plan
-1. Update index.css -- add cream/gold CSS variables, new animation keyframes (fadeIn, slideInCard), section utility classes
-2. Refactor App.tsx -- extract hero into HeroSection component, add NavBar, and add all 8 new sections as separate components in the same file
-3. NavBar: sticky, transparent-to-blur on scroll, logo left, nav links right (How It Works, Breeds, Community, Join The Pack)
-4. HowItWorks: 4 step cards in a horizontal row, icon + number + title + short desc, soft dark card background
-5. BreedPreview: 6-card grid, each card has dog illustration placeholder (colored circle/avatar style), breed name, rarity badge
-6. TraitCustomization: 3 tall cards showing trait categories with color swatch chips and unique count badge
-7. CollectionPreview: 3 example dog cards in a gallery row with "Your collection lives here" framing copy
-8. CommunityEcosystem: section header + 5 cards with icon, title, description, status badge (Live / Coming Soon)
-9. ResourcesTools: compact grid of 5 tiles with icon + label + arrow
-10. JoinThePack: full-width card with gradient background, large headline, subtext, primary button
-11. Footer: 3-column layout, logo, nav links, social icons, legal line
+1. Create `siteConfig.ts` with all social links (X, Instagram, Discord, TikTok as `#`), nav links, and footer nav data.
+2. Create `Header.tsx` extracting the existing Navbar function, importing from siteConfig.
+3. Create `Footer.tsx` extracting the existing Footer function, adding TikTok, centering layout, adding legal router links, importing from siteConfig.
+4. Create `DigitalDogFeature.tsx` — a premium, full-width section with: large hero-style breed cards, trait customization visual grid, naming step callout, mint CTA, and a "Live Preview Coming Soon" placeholder zone.
+5. Create `PrivacyPolicy.tsx` and `TermsOfService.tsx` placeholder pages with real page structure.
+6. Add React Router to the project; update main.tsx or App.tsx to define routes.
+7. Update App.tsx to import and use Header, Footer, DigitalDogFeature instead of inline definitions.
