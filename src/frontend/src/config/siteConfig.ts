@@ -9,6 +9,7 @@ export const CREATE_URL = "https://dog-mint-app-j7c.caffeine.xyz/create";
 export const MY_DOGS_URL = "";
 
 export const SOCIAL_LINKS = [
+  { label: "Facebook", href: "#", icon: "facebook" },
   { label: "X / Twitter", href: "#", icon: "x" },
   { label: "Instagram", href: "#", icon: "instagram" },
   { label: "Discord", href: "#", icon: "discord" },

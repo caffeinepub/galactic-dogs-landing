@@ -1,6 +1,22 @@
 import { useState } from "react";
 import { CREATE_URL, NAV_LINKS } from "../config/siteConfig";
 
+const navChipStyle: React.CSSProperties = {
+  fontFamily: "'Plus Jakarta Sans', sans-serif",
+  fontWeight: 500,
+  fontSize: "0.8rem",
+  letterSpacing: "0.02em",
+  color: "rgba(196,191,219,0.75)",
+  textDecoration: "none",
+  padding: "6px 14px",
+  borderRadius: "8px",
+  background: "rgba(168,107,255,0.08)",
+  border: "1px solid rgba(168,107,255,0.12)",
+  transition: "background 0.2s, color 0.2s, border-color 0.2s",
+  whiteSpace: "nowrap",
+  display: "inline-block",
+};
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -11,14 +27,14 @@ export default function Header() {
         position: "sticky",
         top: 0,
         zIndex: 50,
-        height: "56px",
+        height: "60px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "0 clamp(20px, 5vw, 40px)",
-        background: "rgba(6,8,15,0.85)",
-        backdropFilter: "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
+        padding: "0 clamp(16px, 4vw, 40px)",
+        background: "rgba(6,8,15,0.88)",
+        backdropFilter: "blur(18px)",
+        WebkitBackdropFilter: "blur(18px)",
         borderBottom: "1px solid rgba(168,107,255,0.1)",
       }}
     >
@@ -29,12 +45,13 @@ export default function Header() {
         style={{
           fontFamily: "'Plus Jakarta Sans', sans-serif",
           fontWeight: 700,
-          fontSize: "0.85rem",
+          fontSize: "0.9rem",
           letterSpacing: "0.18em",
           textTransform: "uppercase",
           color: "#A86BFF",
           textDecoration: "none",
-          fontVariant: "small-caps",
+          flexShrink: 0,
+          marginRight: "8px",
         }}
       >
         Galactic Dogs
@@ -42,19 +59,46 @@ export default function Header() {
 
       {/* Desktop nav */}
       <div
-        style={{ display: "flex", gap: "28px", alignItems: "center" }}
         className="hidden md:flex"
+        style={{
+          display: "flex",
+          gap: "8px",
+          alignItems: "center",
+          flexWrap: "nowrap",
+          overflow: "hidden",
+        }}
       >
         {NAV_LINKS.map(({ label, href }) => (
-          <a key={label} href={href} className="nav-link" data-ocid="nav.link">
+          <a
+            key={label}
+            href={href}
+            data-ocid="nav.link"
+            style={navChipStyle}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLAnchorElement;
+              el.style.background = "rgba(168,107,255,0.18)";
+              el.style.color = "#E0D5F5";
+              el.style.borderColor = "rgba(168,107,255,0.35)";
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLAnchorElement;
+              el.style.background = "rgba(168,107,255,0.08)";
+              el.style.color = "rgba(196,191,219,0.75)";
+              el.style.borderColor = "rgba(168,107,255,0.12)";
+            }}
+          >
             {label}
           </a>
         ))}
         {/* My Dogs — muted until gallery exists */}
         <span
-          className="nav-link"
+          data-ocid="nav.link"
           title="Coming soon"
-          style={{ opacity: 0.4, cursor: "default" }}
+          style={{
+            ...navChipStyle,
+            opacity: 0.35,
+            cursor: "default",
+          }}
         >
           My Dogs
         </span>
@@ -73,6 +117,8 @@ export default function Header() {
             color: "#fff",
             textDecoration: "none",
             letterSpacing: "0.03em",
+            whiteSpace: "nowrap",
+            flexShrink: 0,
           }}
         >
           Create Your Dog
@@ -89,7 +135,9 @@ export default function Header() {
           background: "none",
           border: "none",
           cursor: "pointer",
-          padding: "4px",
+          padding: "6px",
+          borderRadius: "6px",
+          flexShrink: 0,
         }}
       >
         <svg
@@ -99,51 +147,77 @@ export default function Header() {
           viewBox="0 0 22 22"
           fill="none"
         >
-          <line
-            x1="2"
-            y1="6"
-            x2="20"
-            y2="6"
-            stroke="#C4BFDB"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          <line
-            x1="2"
-            y1="11"
-            x2="20"
-            y2="11"
-            stroke="#C4BFDB"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          <line
-            x1="2"
-            y1="16"
-            x2="20"
-            y2="16"
-            stroke="#C4BFDB"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
+          {menuOpen ? (
+            <>
+              <line
+                x1="4"
+                y1="4"
+                x2="18"
+                y2="18"
+                stroke="#C4BFDB"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              <line
+                x1="18"
+                y1="4"
+                x2="4"
+                y2="18"
+                stroke="#C4BFDB"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </>
+          ) : (
+            <>
+              <line
+                x1="2"
+                y1="6"
+                x2="20"
+                y2="6"
+                stroke="#C4BFDB"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              <line
+                x1="2"
+                y1="11"
+                x2="20"
+                y2="11"
+                stroke="#C4BFDB"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              <line
+                x1="2"
+                y1="16"
+                x2="20"
+                y2="16"
+                stroke="#C4BFDB"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </>
+          )}
         </svg>
       </button>
 
-      {/* Mobile menu */}
+      {/* Mobile dropdown menu */}
       {menuOpen && (
         <div
           style={{
             position: "absolute",
-            top: "56px",
+            top: "60px",
             left: 0,
             right: 0,
             background: "rgba(6,8,15,0.97)",
             backdropFilter: "blur(20px)",
-            borderBottom: "1px solid rgba(168,107,255,0.12)",
-            padding: "20px clamp(20px,5vw,40px)",
+            WebkitBackdropFilter: "blur(20px)",
+            borderBottom: "1px solid rgba(168,107,255,0.15)",
+            padding: "20px clamp(16px,5vw,40px) 24px",
             display: "flex",
             flexDirection: "column",
-            gap: "16px",
+            gap: "10px",
             zIndex: 49,
           }}
         >
@@ -151,18 +225,30 @@ export default function Header() {
             <a
               key={label}
               href={href}
-              className="nav-link"
               data-ocid="nav.link"
               onClick={() => setMenuOpen(false)}
+              style={{
+                ...navChipStyle,
+                display: "block",
+                textAlign: "center",
+                fontSize: "0.9rem",
+                padding: "10px 16px",
+              }}
             >
               {label}
             </a>
           ))}
-          {/* My Dogs — muted until gallery exists */}
           <span
-            className="nav-link"
             title="Coming soon"
-            style={{ opacity: 0.35, cursor: "default" }}
+            style={{
+              ...navChipStyle,
+              display: "block",
+              textAlign: "center",
+              fontSize: "0.9rem",
+              padding: "10px 16px",
+              opacity: 0.3,
+              cursor: "default",
+            }}
           >
             My Dogs
           </span>
@@ -175,14 +261,15 @@ export default function Header() {
             style={{
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontWeight: 600,
-              fontSize: "0.85rem",
-              padding: "10px 20px",
+              fontSize: "0.9rem",
+              padding: "12px 20px",
               borderRadius: "100px",
               background: "linear-gradient(90deg, #A86BFF 0%, #FF5AD6 100%)",
               color: "#fff",
               textDecoration: "none",
-              display: "inline-block",
-              width: "fit-content",
+              display: "block",
+              textAlign: "center",
+              marginTop: "6px",
             }}
           >
             Create Your Dog
